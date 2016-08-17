@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 
 public class ExecutorEx {
 
-Integer countAll=0;
-    class MyRunnable implements Runnable {
+public Integer countAll=0;
+   public class MyRunnable implements Runnable {
         private String str;
         public Integer cnt=0;
 
@@ -52,7 +52,8 @@ Integer countAll=0;
 
                 Runnable thread = new MyRunnable((String) list.get(k));
                 executor.execute(thread);
-                countAll=countAll;
+
+               // countAll=countAll+thread.cnt;
 
 
             }
