@@ -44,16 +44,18 @@ public Integer countAll=0;
     }
 
     // Run threads
-    public void smain(ArrayList list,Integer num ) {
+    public void smain (ArrayList list,Integer num ) {
+        synchronized (this) {
 
-        ExecutorService executor = Executors.newFixedThreadPool(num);
-     //   for (int i = 0; i < 6; i++) {
+
+            ExecutorService executor = Executors.newFixedThreadPool(num);
+            //   for (int i = 0; i < 6; i++) {
             for (int k = 0; k < list.size(); k++) {
 
                 Runnable thread = new MyRunnable((String) list.get(k));
                 executor.execute(thread);
 
-               // countAll=countAll+thread.cnt;
+                // countAll=countAll+thread.cnt;
 
 
             }
@@ -62,7 +64,13 @@ public Integer countAll=0;
 
 
             // Waiting for all the threads to finish
-        executor.shutdown();
+            executor.shutdown();
+            try {
+                wait(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
 
             while (!executor.isTerminated()) {
                 try {
@@ -73,7 +81,7 @@ public Integer countAll=0;
 
                 }
             }
-
+        }
 
      //   }
 
